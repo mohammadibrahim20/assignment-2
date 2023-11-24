@@ -6,11 +6,22 @@ const creatUserIntoDB = async (userData: TUser) => {
   return result;
 };
 const getAllUserIntoDB = async () => {
-  const result = await User.find({});
+  const result = await User.find({}).select({
+    username: 1,
+    fullName: 1,
+    age: 1,
+    email: 1,
+    address: 1,
+  });
+
   return result;
 };
 const getSingleUserIntoDB = async (id: number) => {
   const result = await User.find({ userId: id });
+  return result;
+};
+const updateUserIntoDB = async (updateData: TUser, userId: number) => {
+  const result = await User.updateOne({ userId }, { $set: { ...updateData } });
   return result;
 };
 const deleteUserIntoDB = async (id: number) => {
@@ -23,4 +34,5 @@ export const userServices = {
   getAllUserIntoDB,
   getSingleUserIntoDB,
   deleteUserIntoDB,
+  updateUserIntoDB,
 };

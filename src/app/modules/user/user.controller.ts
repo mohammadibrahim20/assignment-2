@@ -5,7 +5,6 @@ import { userValidationSchema } from './user.validation';
 const getAllUser = async (req: Request, res: Response) => {
   try {
     const result = await userServices.getAllUserIntoDB();
-
     res.status(200).json({
       success: true,
       message: 'Users fetched successfully!',
@@ -30,6 +29,40 @@ const getSingleUser = async (req: Request, res: Response) => {
     res.status(200).json({
       success: true,
       message: 'Users fetched successfully!',
+      data: result,
+    });
+  } catch (error) {
+    res.status(404).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
+    });
+  }
+};
+const updateUser = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.userId);
+    const body = req.body;
+    if (body.password) {
+      return res.status(404).json({
+        success: false,
+        message: 'Password field not changeable',
+        error: {
+          code: 404,
+          description: 'Password field not changeable',
+        },
+      });
+    }
+    const result = await userServices.updateUserIntoDB(body, id);
+
+    res.status(200).json({
+      success: `${result.matchedCount ? true : false}`,
+      message: `${
+        result.matchedCount ? 'User updated successfully!' : "'User not found"
+      }`,
       data: result,
     });
   } catch (error) {
@@ -92,4 +125,5 @@ export const UserControllers = {
   getAllUser,
   getSingleUser,
   deleteSingleUser,
+  updateUser,
 };

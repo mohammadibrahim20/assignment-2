@@ -1,9 +1,16 @@
-export type TUserName = {
+import { Model } from 'mongoose';
+
+export interface TUserName {
   firstName: string;
   lastName: string;
-};
+}
 
-export type TUser = {
+export interface TOrder {
+  productName: string;
+  price: number;
+  quantity: number;
+}
+export interface TUser {
   userId: number;
   password: string;
   username: string;
@@ -17,4 +24,9 @@ export type TUser = {
     city: string;
     country: string;
   };
-};
+  orders?: Array<TOrder>;
+}
+
+export interface TUserModel extends Model<TUser> {
+  isUserExists(userId: number): Promise<TUser | null>;
+}
