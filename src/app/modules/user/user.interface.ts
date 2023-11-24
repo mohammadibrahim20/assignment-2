@@ -4,9 +4,9 @@ export type TUserName = {
 };
 
 export type TUser = {
-  userId: string;
-  username: string;
+  userId: number;
   password: string;
+  username: string;
   fullName: TUserName;
   age: number;
   email: string;

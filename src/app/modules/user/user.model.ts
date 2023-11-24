@@ -17,7 +17,7 @@ const userNameSchema = new Schema<TUserName>({
 });
 
 const userSchema = new Schema<TUser>({
-  userId: { type: String, required: true, unique: true },
+  userId: { type: Number, required: true, unique: true },
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   fullName: {
@@ -39,5 +39,11 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, Number(config.saltRounds));
   next();
 });
+
+// userSchema.post('save', async function (doc: TUser, next) {
+//   // console.log(doc);
+
+//   next();
+// });
 
 export const User = model<TUser>('user', userSchema);

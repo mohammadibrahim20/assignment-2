@@ -10,7 +10,7 @@ const userNameValidationSchema = z.object({
 });
 
 const userValidationSchema = z.object({
-  userId: z.string().max(20, { message: 'Must be 20 or more characters long' }),
+  userId: z.number().max(20),
   username: z.string().regex(/^[a-zA-Z0-9_-]{3,}$/, {
     message:
       'Username must be at least 3 characters long and can only contain alphanumeric characters, dashes, and underscores.',
