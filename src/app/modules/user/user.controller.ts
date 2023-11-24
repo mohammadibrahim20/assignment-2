@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { User } from './user.model';
 import { userServices } from './user.service';
 import { userValidationSchema } from './user.validation';
 
@@ -24,13 +25,17 @@ const getAllUser = async (req: Request, res: Response) => {
 const getSingleUser = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.userId);
-
-    const result = await userServices.getSingleUserIntoDB(id);
-    res.status(200).json({
-      success: true,
-      message: 'Users fetched successfully!',
-      data: result,
-    });
+    const user = await User.isUserExists(id);
+    if (!user) {
+      throw new Error('User not found');
+    } else {
+      const result = await userServices.getSingleUserIntoDB(id);
+      res.status(200).json({
+        success: true,
+        message: 'Users fetched successfully!',
+        data: result,
+      });
+    }
   } catch (error) {
     res.status(404).json({
       success: false,
@@ -111,11 +116,33 @@ const createUser = async (req: Request, res: Response) => {
   } catch (error) {
     const message = 'user creation failed';
 
-    res.status(500).json({
+    res.status(404).json({
       success: false,
       message: error || message,
-      code: 500,
+      code: 404,
       description: 'user creation failed',
+    });
+  }
+};
+
+const updatOrder = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.userId);
+    const body = req.body;
+    const result = await userServices.updateUserOrderIntoDb(id, body);
+    res.status(200).json({
+      success: true,
+      message: 'Order created successfully!',
+      data: result,
+    });
+  } catch (error) {
+    res.status(404).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
     });
   }
 };
