@@ -4,7 +4,7 @@ export type TUserName = {
 };
 
 export type TUser = {
-  userId: number;
+  userId: string;
   username: string;
   password: string;
   fullName: TUserName;
