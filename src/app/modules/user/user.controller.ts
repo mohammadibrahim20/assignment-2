@@ -3,6 +3,7 @@ import { User } from './user.model';
 import { userServices } from './user.service';
 import { userValidationSchema } from './user.validation';
 
+// get all users
 const getAllUser = async (req: Request, res: Response) => {
   try {
     const result = await userServices.getAllUserIntoDB();
@@ -22,6 +23,8 @@ const getAllUser = async (req: Request, res: Response) => {
     });
   }
 };
+
+// get single user
 const getSingleUser = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.userId);
@@ -47,6 +50,8 @@ const getSingleUser = async (req: Request, res: Response) => {
     });
   }
 };
+
+// update user
 const updateUser = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.userId);
@@ -81,6 +86,8 @@ const updateUser = async (req: Request, res: Response) => {
     });
   }
 };
+
+// delete user by id
 const deleteSingleUser = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.userId);
@@ -103,6 +110,7 @@ const deleteSingleUser = async (req: Request, res: Response) => {
   }
 };
 
+// create a new user
 const createUser = async (req: Request, res: Response) => {
   try {
     const user = req.body;
@@ -125,6 +133,7 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
+// add and update user orders
 const updateOrder = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.userId);
@@ -159,6 +168,8 @@ const updateOrder = async (req: Request, res: Response) => {
     });
   }
 };
+
+// get all orders by user id
 const getAllOrdersByUser = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.userId);
@@ -193,6 +204,7 @@ const getAllOrdersByUser = async (req: Request, res: Response) => {
   }
 };
 
+// get all orders total
 const getOrdersTotal = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.userId);

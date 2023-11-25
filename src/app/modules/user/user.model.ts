@@ -24,6 +24,7 @@ const ordersSchema = new Schema<TOrder>({
   quantity: { type: Number, required: true },
 });
 
+// user schema
 const userSchema = new Schema<TUser>({
   userId: { type: Number, required: true, unique: true },
   username: { type: String, required: true, unique: true },
@@ -44,16 +45,19 @@ const userSchema = new Schema<TUser>({
   orders: [ordersSchema],
 });
 
+// password bcrypt before data saved in database
 userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, Number(config.saltRounds));
   next();
 });
 
+// password string before successful response but using
 userSchema.post('save', async function (doc, next) {
   doc.password = '';
   next();
 });
 
+// user exist custom schema
 userSchema.statics.isUserExists = async function (userId: number) {
   const user = await User.findOne({ userId });
   return user;
