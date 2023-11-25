@@ -21,6 +21,7 @@ This tech stack combines the strengths of each technology to create a powerful a
 
 ### **Submission:**
 
-- github repository link[url](https://github.com/mohammadibrahim20/assignment-2)
+- github repository link[assignment github link url](https://github.com/mohammadibrahim20/assignment-2)
+- Live Host link[assignment vercel server link url](https://assignment-2-eosin.vercel.app/)
 
 ### **Thanks**
