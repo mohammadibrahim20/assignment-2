@@ -19,18 +19,6 @@ This tech stack combines the strengths of each technology to create a powerful a
 - TypeScript
 - Zod
 
-# Backend Mongoose Project
-
-This is the backend for the Mongoose project.
-
-## Live Link
-
-[Live Link](https://backend-mongoose.onrender.com)
-
-## GitHub Repository
-
-[GitHub Repository](https://github.com/readul-islam/Assignment-Backend)
-
 ## Installation
 
 1. Clone the repository:
@@ -44,14 +32,14 @@ This is the backend for the Mongoose project.
    ```
 
    ```bash
-   ADD Root directory  .env File in root folder
+   add Root directory  .env File in root folder
    ```
 
    ```bash
    npm run dev
    ```
 
-### **Submission:**
+## **Submission:**
 
 - github repository link :[assignment github link url](https://github.com/mohammadibrahim20/assignment-2)
 - Live Host link :[assignment vercel server link url](https://assignment-2-eosin.vercel.app/)
