@@ -125,16 +125,29 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
-const updatOrder = async (req: Request, res: Response) => {
+const updateOrder = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.userId);
-    const body = req.body;
-    const result = await userServices.updateUserOrderIntoDb(id, body);
-    res.status(200).json({
-      success: true,
-      message: 'Order created successfully!',
-      data: result,
-    });
+
+    const user = await User.isUserExists(id);
+    if (user) {
+      const body = req.body;
+      const result = await userServices.updateUserOrderIntoDb(id, body);
+      res.status(200).json({
+        success: true,
+        message: 'Order created successfully!',
+        data: result,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
   } catch (error) {
     res.status(404).json({
       success: false,
@@ -153,4 +166,5 @@ export const UserControllers = {
   getSingleUser,
   deleteSingleUser,
   updateUser,
+  updateOrder,
 };
