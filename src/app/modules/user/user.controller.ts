@@ -159,7 +159,73 @@ const updateOrder = async (req: Request, res: Response) => {
     });
   }
 };
+const getAllOrdersByUser = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.userId);
 
+    const user = await User.isUserExists(id);
+    if (user) {
+      const result = await userServices.getAllOrdersByUserIntoDb(id);
+      res.status(200).json({
+        success: true,
+        message: 'Order fetched successfully!',
+        data: result,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+  } catch (error) {
+    res.status(404).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
+    });
+  }
+};
+
+const getOrdersTotal = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.userId);
+
+    const user = await User.isUserExists(id);
+    if (user) {
+      const result = await userServices.getOrdersTotalIntoDB(id);
+      res.status(200).json({
+        success: true,
+        message: 'Total price calculated successfully!',
+        data: result,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+  } catch (error) {
+    res.status(404).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
+    });
+  }
+};
 export const UserControllers = {
   createUser,
   getAllUser,
@@ -167,4 +233,6 @@ export const UserControllers = {
   deleteSingleUser,
   updateUser,
   updateOrder,
+  getAllOrdersByUser,
+  getOrdersTotal,
 };

@@ -34,6 +34,33 @@ const updateUserOrderIntoDb = async (userId: number, orderData: TOrder) => {
   ).select('orders -_id');
   return newProduct;
 };
+const getAllOrdersByUserIntoDb = async (userId: number) => {
+  const result = await User.findOne(
+    { userId },
+    { 'orders.productName': 1, 'orders.price': 1, 'orders.quantity': 1 },
+  );
+  return result;
+};
+
+const getOrdersTotalIntoDB = async (userId: number) => {
+  const result = await User.aggregate([
+    { $match: { userId: userId } },
+    { $unwind: '$orders' },
+    {
+      $group: {
+        _id: null,
+        totalPrice: {
+          $sum: {
+            $multiply: ['$orders.price', '$orders.quantity'],
+          },
+        },
+      },
+    },
+    { $project: { _id: 0 } },
+  ]);
+  return result;
+};
+
 const deleteUserIntoDB = async (id: number) => {
   const result = await User.deleteOne({ userId: id });
   return result;
@@ -46,4 +73,6 @@ export const userServices = {
   deleteUserIntoDB,
   updateUserIntoDB,
   updateUserOrderIntoDb,
+  getAllOrdersByUserIntoDb,
+  getOrdersTotalIntoDB,
 };
