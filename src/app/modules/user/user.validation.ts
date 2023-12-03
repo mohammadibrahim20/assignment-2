@@ -1,29 +1,18 @@
 import z from 'zod';
 
 const userNameValidationSchema = z.object({
-  firstName: z
-    .string()
-    .nonempty({ message: 'First Name must be a required field' }),
-  lastName: z
-    .string()
-    .nonempty({ message: 'Last Name must be a required field' }),
+  firstName: z.string({
+    invalid_type_error: 'First Name must be a required field',
+  }),
+  lastName: z.string({
+    invalid_type_error: 'Last Name must be a required field',
+  }),
 });
 
 const userValidationSchema = z.object({
   userId: z.number(),
-  username: z.string().regex(/^[a-zA-Z0-9_-]{3,}$/, {
-    message:
-      'Username must be at least 3 characters long and can only contain alphanumeric characters, dashes, and underscores.',
-  }),
-  password: z
-    .string()
-    .regex(
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()-_=+{};:,<.>]).{8,}$/,
-      {
-        message:
-          'Password must contain at least 8 characters, including at least one number, one uppercase, one lowercase letter, and one special character.',
-      },
-    ),
+  username: z.string({ invalid_type_error: 'username must be a string' }),
+  password: z.string({ invalid_type_error: 'password must be string' }),
   fullName: userNameValidationSchema,
   age: z
     .number()

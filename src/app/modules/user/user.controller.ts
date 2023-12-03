@@ -56,23 +56,10 @@ const updateUser = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.userId);
     const body = req.body;
-    if (body.password) {
-      return res.status(404).json({
-        success: false,
-        message: 'Password field not changeable',
-        error: {
-          code: 404,
-          description: 'Password field not changeable',
-        },
-      });
-    }
     const result = await userServices.updateUserIntoDB(body, id);
-
     res.status(200).json({
-      success: `${result.matchedCount ? true : false}`,
-      message: `${
-        result.matchedCount ? 'User updated successfully!' : "'User not found"
-      }`,
+      success: true,
+      message: 'Users updated successfully!',
       data: result,
     });
   } catch (error) {
@@ -99,7 +86,7 @@ const deleteSingleUser = async (req: Request, res: Response) => {
       message: `${
         result.deletedCount ? 'User deleted successfully!' : "'User not found"
       }`,
-      data: result,
+      data: null,
     });
   } catch (error) {
     res.status(404).json({
@@ -145,7 +132,7 @@ const updateOrder = async (req: Request, res: Response) => {
       res.status(200).json({
         success: true,
         message: 'Order created successfully!',
-        data: result,
+        data: null,
       });
     } else {
       res.status(404).json({

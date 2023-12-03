@@ -1,6 +1,7 @@
+import bcrypt from 'bcrypt';
+import config from '../../config/config';
 import { TOrder, TUser } from './user.interface';
 import { User } from './user.model';
-
 // create a new user in the database
 const creatUserIntoDB = async (userData: TUser) => {
   const result = await User.create(userData);
@@ -26,9 +27,23 @@ const getSingleUserIntoDB = async (id: number) => {
   return result;
 };
 //update user
-const updateUserIntoDB = async (updateData: TUser, userId: number) => {
-  const result = await User.updateOne({ userId }, { $set: { ...updateData } });
-  return result;
+const updateUserIntoDB = async (updateData: Partial<TUser>, userId: number) => {
+  let updatePassword: string | null;
+  const { password, ...resData } = updateData;
+  if (password) {
+    updatePassword = await bcrypt.hash(password, Number(config.saltRounds));
+    const result = await User.findOneAndUpdate(
+      { userId: userId },
+      { $set: { ...resData, updatePassword } },
+    ).select('-_id -orders -password');
+    return result;
+  } else {
+    const result = await User.findOneAndUpdate(
+      { userId: userId },
+      { $set: { ...resData } },
+    ).select('-_id -orders -password');
+    return result;
+  }
 };
 // update order user by id
 const updateUserOrderIntoDb = async (userId: number, orderData: TOrder) => {
