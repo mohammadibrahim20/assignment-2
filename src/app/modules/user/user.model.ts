@@ -35,7 +35,7 @@ const userSchema = new Schema<TUser>({
   },
   age: { type: Number, required: true },
   email: { type: String, required: true, unique: true },
-  isActive: { type: String, enum: ['active', 'deactivate'], required: true },
+  isActive: { type: Boolean, required: true },
   hobbies: [{ type: String }],
   address: {
     street: { type: String, required: true },

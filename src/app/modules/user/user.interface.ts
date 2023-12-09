@@ -18,7 +18,7 @@ export interface TUser {
   fullName: TUserName;
   age: number;
   email: string;
-  isActive: 'active' | 'deactivate';
+  isActive: boolean;
   hobbies: string[];
   address: {
     street: string;
